@@ -6,6 +6,7 @@
 
 class Score;
 class Player;
+class Database;
 
 class CollissionEngine
 {
@@ -14,9 +15,10 @@ class CollissionEngine
 		EntityPool<Enemy> &enemies;
 		Player &player;
 		Score &score;
+		Database &dbHighscores;
 
 	public:
-		CollissionEngine(EntityPool<Bullet> &bullets, EntityPool<Enemy> &enemies, Score &score, Player &player);
+		CollissionEngine(EntityPool<Bullet> &bullets, EntityPool<Enemy> &enemies, Score &score, Player &player, Database &dbHighscores);
 
 		void update();
 

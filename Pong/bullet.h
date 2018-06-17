@@ -1,46 +1,34 @@
 #pragma once
 
 #include <SFML/Graphics/CircleShape.hpp>
+#include "entity.h"
+#include <memory>
 
-namespace sf
+class Bullet : public Entity
 {
-	class RenderWindow;
-}
+protected:
+	// Physics
+	float lifeTime;
+	float damage;
 
-class Bullet
-{
-	public:
-		enum class State {
-			alive,
-			dead
-		};
+	// Window
+	sf::RenderWindow &window;
 
-	private:
-		// Physics
-		sf::Vector2f position;
-		float const speed = 6.0;
-		float direction;
+public:
+	Bullet(sf::RenderWindow &window, sf::Vector2f &iniPosition, float iniDirection);
 
-		int lifeTime = 60;
+	virtual sf::Shape const &getShape() override = 0;
+	virtual float getDamage() = 0;
 
-		State state = State::alive;
+	virtual void update() override = 0;
+	virtual void draw() override = 0;
 
-		// Visual
-		float const radius = 2;
-		sf::CircleShape shape;
-
-		sf::RenderWindow &window;
-		
-	public:
-		Bullet(sf::RenderWindow &window, sf::Vector2f &iniPosition, float iniDirection);
-
-		void setState(State newState);
-
-		State getState();
-		sf::CircleShape const &getShape();
-		sf::Vector2f const &getPosition();
-		float getRadius();
-
-		void update();
-		void draw();
+	template <typename T>
+	static std::unique_ptr<T> create(sf::RenderWindow &window, sf::Vector2f &iniPosition, float iniDirection);
 };
+
+template <typename T>
+static std::unique_ptr<T> Bullet::create(sf::RenderWindow &window, sf::Vector2f &iniPosition, float iniDirection)
+{
+	return std::make_unique<T>(window, iniPosition, iniDirection);
+}

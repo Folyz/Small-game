@@ -22,6 +22,7 @@ private:
 public:
 	EntityPool(sf::RenderWindow &window);
 
+	void add(std::unique_ptr<T> entity);
 	void create(sf::Vector2f position, float direction);
 
 	int getAmount();
@@ -33,21 +34,21 @@ public:
 template<class T>
 void EntityPool<T>::update()
 {
-	// Update all bullets in the list
+	// Update all entities in the list
 	for (auto &entity : list)
 		entity->update();
 
-	// Remove bullets in state::dead
+	// Remove entities in state::dead
 	list.erase(std::remove_if(list.begin(), list.end(),
 		[&](std::unique_ptr<T> const& entity)
 	{
-		return (entity.get()->getState() == T::State::dead);
+		return (entity.get()->getState() == T::EState::Dead);
 	}), list.end());
 }
 
 template<class T>
 EntityPool<T>::EntityPool(sf::RenderWindow &window)
-	:
+:
 	window{ window }
 { }
 
@@ -56,6 +57,12 @@ void EntityPool<T>::create(sf::Vector2f position, float direction)
 {
 	std::unique_ptr<T> tmp = std::make_unique<T>(window, position, direction);
 	list.push_back(std::move(tmp));
+}
+
+template<class T>
+void EntityPool<T>::add(std::unique_ptr<T> entity)
+{
+	list.push_back(std::move(entity));
 }
 
 template<class T>

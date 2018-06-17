@@ -7,7 +7,7 @@
 #include <iostream>
 
 #include "statemachine.h"
-#include "introstate.h"
+#include "highscorestate.h"
 
 PlayState::PlayState(StateMachine& machine, sf::RenderWindow& window, bool replace)
 :
@@ -50,10 +50,6 @@ void PlayState::input()
 					machine.quit();					
 					break;
 
-				case sf::Keyboard::Space:			// Shoot player bullet
-					bulletPool.create(player.getPosition(), player.getDirection());
-					break;
-
 				default:
 					break;
 			}
@@ -65,30 +61,31 @@ void PlayState::input()
 	}
 
 	// Gain user input for player movement
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::J))
 	{
-		player.rotate(true);
+		player.rotate(Player::ERotation::Left);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::L))
 	{
-		player.rotate(false);
+		player.rotate(Player::ERotation::Right);
 	}
 
-	player.setSpeed(0);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::I))
 	{
-		player.setSpeed(4);
+		player.moveForward();
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::K))
 	{
-		player.setSpeed(-2);
+		player.moveBackward();
 	}
 
-	if (player.getState() == Player::State::dead)
-		nextState = StateMachine::build<IntroState>(machine, window, true);
+	// Player shooting
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		player.shoot();
+	}
 }
 
 void PlayState::update()
@@ -101,6 +98,9 @@ void PlayState::update()
 	enemySpawner.update();
 
 	player.update();
+
+	if (player.getState() == Entity::EState::Dead)
+		nextState = StateMachine::build<HighscoreState>(machine, window, true);
 }
 
 void PlayState::draw()

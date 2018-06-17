@@ -3,13 +3,15 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <string>
+#include <iostream>
 
 Score::Score(sf::RenderWindow &window)
 :
 	window{ window }
 {
 	// Load font
-	scoreFont.loadFromFile("Fonts/AldotheApache.ttf");
+	if (!scoreFont.loadFromFile("Fonts/AldotheApache.ttf"))
+		std::cerr << "Error: could not load font AldotheApache.ttf" << std::endl;
 
 	// Set text
 	scoreText.setFont(scoreFont);
@@ -28,4 +30,9 @@ void Score::add(int amount)
 void Score::draw()
 {
 	window.draw(scoreText);
+}
+
+int Score::getValue()
+{
+	return score;
 }

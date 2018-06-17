@@ -39,24 +39,39 @@
     <Filter Include="Source Files\Application">
       <UniqueIdentifier>{710746db-a58f-49b7-adf4-895638ba635b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entities\Bullets">
+      <UniqueIdentifier>{ce3613af-0ef1-4943-b8c2-8afd81f3019f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Enemies">
+      <UniqueIdentifier>{4fac26e0-f28f-46a2-a24a-60e6970938de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Application\States">
+      <UniqueIdentifier>{d201e994-dec3-41e2-88f8-5f2ac1a25a59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application\States">
+      <UniqueIdentifier>{b26c2d71-e4a9-4db7-a2e5-6e8454a4135e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Bullets">
+      <UniqueIdentifier>{3df40034-91b3-4116-8f62-117d13c31428}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Enemies">
+      <UniqueIdentifier>{256676a8-114d-493b-a10c-b5956dff77bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Player">
+      <UniqueIdentifier>{1d20a618-26d3-4032-94ce-d3883a906f39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Player">
+      <UniqueIdentifier>{3ea8a3b0-7ea7-42f9-879e-6203c81ebff6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Player\Guns">
+      <UniqueIdentifier>{6a90f3eb-9a2c-4b7a-8371-11ec49fd910b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Player\Guns">
+      <UniqueIdentifier>{f63ed693-537f-441e-b264-277cf0c26971}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="player.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="bullet.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="application.h">
-      <Filter>Header Files\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="introstate.h">
-      <Filter>Header Files\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="playstate.h">
-      <Filter>Header Files\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="state.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
     <ClInclude Include="statemachine.h">
@@ -86,27 +101,51 @@
     <ClInclude Include="entityPool.h">
       <Filter>Header Files\Entity handlers</Filter>
     </ClInclude>
+    <ClInclude Include="database.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files\Entities\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="gun.h">
+      <Filter>Header Files\Entities\Player\Guns</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>Header Files\Entities\Bullets</Filter>
+    </ClInclude>
     <ClInclude Include="enemy.h">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="highscorestate.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="introstate.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="playstate.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="state.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="entity.h">
       <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="growBullet.h">
+      <Filter>Header Files\Entities\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="standardBullet.h">
+      <Filter>Header Files\Entities\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="standardGun.h">
+      <Filter>Header Files\Entities\Player\Guns</Filter>
+    </ClInclude>
+    <ClInclude Include="growGun.h">
+      <Filter>Header Files\Entities\Player\Guns</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="player.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="bullet.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="application.cpp">
-      <Filter>Source Files\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="introstate.cpp">
-      <Filter>Source Files\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="playstate.cpp">
-      <Filter>Source Files\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="state.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="statemachine.cpp">
@@ -130,8 +169,50 @@
     <ClCompile Include="enemySpawner.cpp">
       <Filter>Source Files\Entity handlers</Filter>
     </ClCompile>
+    <ClCompile Include="database.cpp">
+      <Filter>Source Files\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="highscorestate.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="introstate.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="playstate.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="state.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>Source Files\Entities\Bullets</Filter>
+    </ClCompile>
     <ClCompile Include="enemy.cpp">
+      <Filter>Source Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files\Entities\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="entity.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="gun.cpp">
+      <Filter>Source Files\Entities\Player\Guns</Filter>
+    </ClCompile>
+    <ClCompile Include="standardBullet.cpp">
+      <Filter>Source Files\Entities\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="growBullet.cpp">
+      <Filter>Source Files\Entities\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="standardGun.cpp">
+      <Filter>Source Files\Entities\Player\Guns</Filter>
+    </ClCompile>
+    <ClCompile Include="growGun.cpp">
+      <Filter>Source Files\Entities\Player\Guns</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Pong1.rc" />
   </ItemGroup>
 </Project>

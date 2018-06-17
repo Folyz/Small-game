@@ -2,12 +2,14 @@
 #include "player.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <iostream>
+#include "standardGun.h"
+#include "growGun.h"
+#include "gun.h"
 #include <math.h>
 
 #define PI 3.14159265
 
-Player::Player(sf::RenderWindow &window)
+Player::Player(sf::RenderWindow &window, EntityPool<Bullet> &bulletPool)
 :
 	window{ window }
 {
@@ -21,25 +23,33 @@ Player::Player(sf::RenderWindow &window)
 	sf::FloatRect shapeRect = shape.getLocalBounds();
 	shape.setOrigin(shapeRect.left + shapeRect.width / 2.0f, shapeRect.top + shapeRect.height / 2.0f);
 
-	// Start position
+	radius = INITIAL_RADIUS;
+
+	// Attributes
+	gun = Gun::create<GrowGun>(window, *this, bulletPool);
+
+	// Start position and physics
 	position.x = window.getSize().x / 2.0f;
 	position.y = window.getSize().y / 2.0f;
 	shape.setPosition(position);
+
+	speed = INITIAL_SPEED;
+	direction = INITIAL_DIRECTION;
 }
 
-sf::ConvexShape const &Player::getShape()
+sf::Shape const &Player::getShape()
 {
 	return shape;
 }
 
-float Player::getRadius()
+void Player::moveForward()
 {
-	return radius;
+	speed += 4;
 }
 
-Player::State Player::getState()
+void Player::moveBackward()
 {
-	return state;
+	speed -= 2;
 }
 
 void Player::update()
@@ -47,6 +57,8 @@ void Player::update()
 	// Position
 	position.x += speed * cos(direction * PI / 180);
 	position.y += speed * sin(direction * PI / 180);
+
+	speed = 0;
 
 	// Window boundary
 	if (position.x < 0)
@@ -63,6 +75,9 @@ void Player::update()
 
 	shape.setPosition(position);
 	shape.setRotation(direction);
+
+	// Gun
+	gun->update();
 }
 
 void Player::draw()
@@ -70,30 +85,15 @@ void Player::draw()
 	window.draw(shape);
 }
 
-void Player::setSpeed(float newSpeed)
+void Player::shoot()
 {
-	speed = newSpeed;
+	gun->shoot();
 }
 
-void Player::setState(State newState)
+void Player::rotate(ERotation rotation)
 {
-	state = newState;
-}
-
-void Player::rotate(bool rotateLeft)
-{
-	if (rotateLeft)
-		direction -= rotationSpeed;
+	if (rotation == ERotation::Left)
+		direction -= ROTATION_SPEED;
 	else
-		direction += rotationSpeed;
-}
-
-sf::Vector2f const &Player::getPosition()
-{
-	return position;
-}
-
-float Player::getDirection()
-{
-	return direction;
+		direction += ROTATION_SPEED;
 }

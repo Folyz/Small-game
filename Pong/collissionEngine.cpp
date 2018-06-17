@@ -6,13 +6,15 @@
 #include "score.h"
 #include "player.h"
 #include "entityPool.h"
+#include "database.h"
 
-CollissionEngine::CollissionEngine(EntityPool<Bullet> &bullets, EntityPool<Enemy> &enemies, Score &score, Player &player)
+CollissionEngine::CollissionEngine(EntityPool<Bullet> &bullets, EntityPool<Enemy> &enemies, Score &score, Player &player, Database &dbHighscores)
 :
 	bullets{ bullets },
 	enemies{ enemies },
 	score{ score },
-	player{ player }
+	player{ player },
+	dbHighscores{ dbHighscores }
 { }
 
 bool CollissionEngine::checkCollission(std::unique_ptr<Bullet> &bullet, std::unique_ptr<Enemy> &enemy)
@@ -52,8 +54,8 @@ void CollissionEngine::update()
 		for (auto &enemy : enemies.list)
 			if (checkCollission(bullet, enemy))
 			{
-				bullet->setState(Bullet::State::dead);
-				enemy->setState(Enemy::State::dead);
+				bullet->die();
+				enemy->die();
 				score.add(enemy->getWorthPoints());
 			}
 
@@ -61,7 +63,9 @@ void CollissionEngine::update()
 	for (auto &enemy : enemies.list)
 		if (checkCollission(enemy))
 		{
-			player.setState(Player::State::dead);
+			player.die();
 			std::cerr << "Player died" << std::endl;
+			//dbHighscores.addScore("Joost", score.getValue());
+			break;
 		}
 }

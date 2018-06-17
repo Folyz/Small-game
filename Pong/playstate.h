@@ -11,6 +11,7 @@
 #include "collissionEngine.h"
 #include "enemySpawner.h"
 #include "entityPool.h"
+#include "database.h"
 
 class StateMachine;
 
@@ -19,7 +20,7 @@ namespace sf
 	class RenderWindow;
 }
 
-class PlayState : public State
+class PlayState final : public State
 {
 	private:
 		// Texts and fonts
@@ -28,18 +29,21 @@ class PlayState : public State
 		sf::Text pressSpace;
 		Fader fader{ window, sf::Color{ 26, 128, 182, 252 } };
 
-		// Entities
-		Player player{ window };
-
 		// Score
 		Score score{ window };
+
+		// Database for highscores
+		Database dbHighscores;
 
 		// Entity handlers
 		EntityPool<Bullet> bulletPool{ window };
 		EntityPool<Enemy> enemyPool{ window };
 
+		// Entities
+		Player player{ window , bulletPool };
+
 		EnemySpawner enemySpawner{ window, enemyPool, player };
-		CollissionEngine collissionEngine{ bulletPool, enemyPool, score, player};
+		CollissionEngine collissionEngine{ bulletPool, enemyPool, score, player, dbHighscores};
 
 	public:
 		PlayState(StateMachine& machine, sf::RenderWindow& window, bool replace = true);

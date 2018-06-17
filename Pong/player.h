@@ -1,49 +1,55 @@
 #pragma once
 
 #include <SFML/Graphics/ConvexShape.hpp>
+#include "entity.h"
+#include "entityPool.h"
+#include "gun.h"
 
 namespace sf
 {
 	class RenderWindow;
 }
 
-class Player
+class Bullet;
+
+class Player : public Entity
 {
-	public:
-		enum class State {
-			alive,
-			dead
-		};
+public:
+	enum class ERotation
+	{
+		Left,
+		Right
+	};
 
-	private:
-		// Physics
-		sf::Vector2f position;
-		float speed = 0;
-		float direction = 90;
-		float const rotationSpeed = 5;
+private:
+	// Physics
+	int const INITIAL_DIRECTION = 90;
+	float const INITIAL_RADIUS = 2;
+	float const INITIAL_SPEED = 0;
 
-		State state = State::alive;
+	float const ROTATION_SPEED = 5;
 
-		// Visual
-		float const radius = 2;
-		sf::ConvexShape shape;
+	// Gun
+	std::unique_ptr<Gun> gun;
+	
+	// Visual
+	sf::ConvexShape shape;
 
-		sf::RenderWindow &window;
+	// Other
+	sf::RenderWindow &window;
 
-	public:
-		Player(sf::RenderWindow &window);
+public:
+	Player(sf::RenderWindow &window, EntityPool<Bullet> &bulletPool);
 
-		void setState(State newState);
-		void setSpeed(float newSpeed);
+	sf::Shape const &getShape() override;
 
-		sf::ConvexShape const &getShape();
-		sf::Vector2f const &getPosition();
-		float getDirection();
-		float getRadius();
-		State getState();
+	void moveForward();
+	void moveBackward();
 
-		void rotate(bool rotateLeft);
+	void rotate(ERotation rotation);
 
-		void update();
-		void draw();
+	void shoot();
+
+	void update() override;
+	void draw() override;
 };

@@ -6,6 +6,7 @@
 
 #include "state.h"
 #include "fader.h"
+#include "database.h"
 
 class StateMachine;
 
@@ -14,7 +15,7 @@ namespace sf
 	class RenderWindow;
 }
 
-class IntroState : public State
+class IntroState final : public State
 {
 	private:
 		// Intro text

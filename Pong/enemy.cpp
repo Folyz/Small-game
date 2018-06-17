@@ -11,43 +11,26 @@
 Enemy::Enemy(sf::RenderWindow &window, sf::Vector2f &iniPosition, float iniDirection)
 	:
 	window{ window },
-	position{ iniPosition },
-	direction{ iniDirection },
-	shape{ radius, vertices }
+	shape{ INITIAL_RADIUS, VERTICES }
 {
+	position = iniPosition;
+	direction = iniDirection;
+	speed = INITIAL_SPEED;
+	radius = INITIAL_RADIUS;
+
 	shape.setFillColor(color);
 	shape.setOrigin(radius, radius);
 	shape.setPosition(position);
 }
 
-Enemy::State Enemy::getState()
-{
-	return state;
-}
-
 int Enemy::getWorthPoints()
 {
-	return worthPoints;
+	return POINTS_WORTH;
 }
 
-sf::CircleShape const &Enemy::getShape()
+sf::Shape const &Enemy::getShape()
 {
 	return shape;
-}
-
-sf::Vector2f const &Enemy::getPosition()
-{
-	return position;
-}
-
-float Enemy::getRadius()
-{
-	return radius;
-}
-
-void Enemy::setState(State newState)
-{
-	state = newState;
 }
 
 void Enemy::update()

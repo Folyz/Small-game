@@ -26,5 +26,7 @@ class Score
 
 		void add(int amount);
 
+		int getValue();
+
 		void draw();
 };
